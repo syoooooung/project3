@@ -19,7 +19,8 @@
 
 ### 1. 프로젝트 문서 및 소스코드 수정사항
 
-#### [DS_Project3_ver2.pdf](https://github.com/DSLDataStorage/DS_Project_3_2022_2/files/10082342/DS_Project3_ver2.pdf)
+#### [DS_Project3_ver3.pdf](https://github.com/DSLDataStorage/DS_Project_3_2022_2/files/10122182/DS_Project3_ver3.pdf)
+
 
 
 
@@ -27,6 +28,7 @@
 ```
 11/11 - ver1 업로드
 11/24 - ver2 업로드(제한사항 및 구현 시 유의사항에 메모리 누수 조건 추가)
+11/30 - ver3 업로드(미사용 클래스(vertexset)에 대한 본문 내용 제거)
 ```
 
 ### 2. 자주들어오는 질문 
