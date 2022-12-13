@@ -1,2 +1,5 @@
 LOAD graph_L.txt
 PRINT
+BFS 3
+DFS 4
+DFS_R 3
