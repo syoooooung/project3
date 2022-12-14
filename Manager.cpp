@@ -97,6 +97,12 @@ void Manager::run(const char* command_txt) {
 				printErrorCode(800);
 			}
 		}
+		else if(strcmp(command,"FLOYD")==0){
+			cout<<"2";
+			if(!mFLOYD()){
+				printErrorCode(900);
+			}
+		}
 
 	}
 	fin.close();
@@ -240,6 +246,9 @@ bool Manager::mBELLMANFORD(int s_vertex, int e_vertex)
 
 bool Manager::mFLOYD()
 {
+	if(!FLOYD(graph, &fout)){
+		return 0;
+	}
 	return 1;
 }
 

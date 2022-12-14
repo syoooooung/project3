@@ -174,7 +174,7 @@ int minDistance(Graph* graph, int* dist, int* visit, int sz) {
 bool Bellmanford(Graph* graph, int s_vertex, int e_vertex, ofstream* fout)
 {
     if (graph->getSize() == 0) { *fout << "no graph" << endl; return 0; }
-
+    if  (s_vertex <0 || s_vertex>=graph->getSize() || e_vertex <0 || e_vertex>=graph->getSize() ) return 0;
     int* distance = new int[graph->getSize()];
     int* visit = new int[graph->getSize()];
     int* path = new int[graph->getSize()];
@@ -193,7 +193,7 @@ bool Bellmanford(Graph* graph, int s_vertex, int e_vertex, ofstream* fout)
     distance[s_vertex] = 0;
    
     for (int i = 0; i < g_sz; i++) {
-        Is_neg_cycle = 0;
+        Is_neg_cycle = false;
         int j = s_vertex;
        //for (int j = 0; j < g_sz; j++) {
         int p = 0;
@@ -201,14 +201,17 @@ bool Bellmanford(Graph* graph, int s_vertex, int e_vertex, ofstream* fout)
             map<int, int> mm;
             graph->getAdjacentEdges(j, &mm);
             for (it = mm.begin(); it != mm.end(); it++) {
-                int cur_v = it->first; //j에서 cur_v 를 볼거야
-                int weit = it->second; //j에서 cur_v로의 가중치
+                int cur_v = it->first; //jto cur_v 
+                int weit = it->second; //j to cur_v => weight
 
                 if (distance[j] != INT_MAX && distance[cur_v] > distance[j] + weit) {
                     distance[cur_v] = distance[j] + weit;
-                    Is_neg_cycle = 1;
+                    if(i== g_sz-1 )Is_neg_cycle = true;
 
                     path[cur_v] = j;
+                }
+                else if((distance[cur_v]> distance[j]+ weit) && (i==g_sz-1)){
+                    Is_neg_cycle = true;
                 }
             }
             if (j + 1 == g_sz) { j = 0; continue; }
@@ -217,15 +220,16 @@ bool Bellmanford(Graph* graph, int s_vertex, int e_vertex, ofstream* fout)
             //}
         }
     }
-    if (Is_neg_cycle) {
+    if (Is_neg_cycle==true) {
         return 0;
     }
     for (int i = 0; i < g_sz; i++) {
-        cout << path[i] << " " << distance[i] << endl;
+        //if(distance[i]<0) return 0;
     }
     stack<int> s;
     s.push(e_vertex);
     int sum = distance[e_vertex];
+    ///if(sum==INT_MAX || sum <= 0)return 0;
     int pre_n = path[e_vertex];
     while (pre_n!= INT_MAX) {
         s.push(pre_n);
@@ -246,7 +250,66 @@ bool Bellmanford(Graph* graph, int s_vertex, int e_vertex, ofstream* fout)
     return 1;
 }
 
-bool FLOYD(Graph* graph)
+bool FLOYD(Graph* graph,ofstream *fout)
 {
+    int g_sz = graph->getSize();
+    int distance[g_sz][g_sz]={0,};
+    for(int i=0 ; i<g_sz ; i++){
+        for(int j=0; j<g_sz ; j++){
+            distance[i][j]=99999;
+            if(i==j) distance[i][j]=0;
+        }
+    }
+    for(int i=0; i< g_sz; i++){
+        map<int, int> mm;
+        map<int, int>::iterator it;
+        graph->getAdjacentEdges(i, &mm);
+        for(it = mm.begin();it != mm.end(); it++){
+            distance[i][it->first]= it->second;
+        }
+    }
+
+    for(int i=0 ; i<g_sz ; i++){
+        for(int j=0; j<g_sz ; j++){
+            if(i==j) distance[i][j]=0;
+            cout<<distance[i][j]<<"\t";
+        }
+        cout<<endl;
+    }
+
+    for(int k=0; k< g_sz; k++){
+        for(int i=0; i<g_sz; i++){
+            for(int j=0; j< g_sz ; j++){
+                if(distance[i][k]+ distance[k][j]<distance[i][j] ){
+                    distance[i][j]= distance[i][k]+ distance[k][j];
+                }
+            }
+        }
+    }
+    for(int i=0; i< g_sz ; i++){
+       if(distance[i][i]<0) return 0;
+    }
+    cout<<"1";
+    *fout<<"======== PRINT ========="<<endl;
+    for (int i = 0; i < g_sz; i++)
+	{
+		*fout << "[" << i << "]" << '\t';
+	}
+    *fout<<endl;
+    for(int i=0; i<g_sz; i++){
+        *fout<<"["<<i<<"]"<<"\t";
+        for(int j=0; j<g_sz  ; j++){
+            if(distance[i][j]==99999&& i!=j){
+                *fout<<"x"<<"\t";
+            }
+            else{
+                *fout<<distance[i][j]<<"\t";
+            }
+        }
+        *fout<<endl;
+    }
+    *fout<<"====================="<<endl;
+
+
     return 1;
 }

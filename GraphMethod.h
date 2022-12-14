@@ -11,6 +11,6 @@ bool DFS_R(Graph* graph, vector<bool>* visit, int vertex,ofstream *fout);
 bool Kruskal(Graph* graph);
 bool Dijkstra(Graph* graph, int vertex,ofstream *fout);
 bool Bellmanford(Graph* graph, int s_vertex, int e_vertex,ofstream *fout);
-bool FLOYD(Graph* graph);
+bool FLOYD(Graph* graph,ofstream *fout);
 int minDistance( int *dist, int *visit, int sz);
 #endif
