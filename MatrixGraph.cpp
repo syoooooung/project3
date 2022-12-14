@@ -27,7 +27,12 @@ MatrixGraph::~MatrixGraph()
 int MatrixGraph::getValue(int i, int j) {
 	return Mat_nodi[i][j];
 }
-
+int MatrixGraph::getadj(int from, int to){
+	if (m_Mat[from][to] != 0) {
+		return true; //connect
+	}
+	else{return false;}
+}
 
 void MatrixGraph::getAdjacentEdges(int vertex, map<int, int>* m)
 {

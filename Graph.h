@@ -34,6 +34,7 @@ public:
 	virtual	bool printGraph(ofstream *fout) = 0;
 	virtual void insetEdge_nodi(int from, int to, int weight)=0;
 	virtual void getAdjacentEdges_nodi(int vertex, map<int, int>* m)=0;
+	virtual int getadj(int from, int to)=0;
 };
 
 #endif

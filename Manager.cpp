@@ -77,6 +77,26 @@ void Manager::run(const char* command_txt) {
 				printErrorCode(500);
 			}
 		}
+		else if(strcmp(command, "DIJKSTRA")==0){
+			command= strtok(NULL," ");
+			if(command==NULL){printErrorCode(700); continue;}
+			string tmp_v4 = command;
+			int dij = atoi(tmp_v4.c_str());
+			if(!mDIJKSTRA(dij)){
+				printErrorCode(700);
+			}
+		}
+		else if(strcmp(command,"BELLMANFORD")==0){
+			command = strtok(NULL," ");
+			string tmp_v5 =command;
+			command = strtok(NULL, " ");
+			string tmp_v6 = command;
+			int st = atoi(tmp_v5.c_str());
+			int et = atoi(tmp_v6.c_str());
+			if(!mBELLMANFORD(st, et)){
+				printErrorCode(800);
+			}
+		}
 
 	}
 	fin.close();
@@ -196,6 +216,12 @@ bool Manager::mDFS_R(int vertex)
 
 bool Manager::mDIJKSTRA(int vertex)
 {
+	if(!Dijkstra(graph, vertex, &fout)){
+		return 0;
+	}
+	else{
+		fout<<"==================="<<endl;
+	}
 	return 1;
 }
 
@@ -206,6 +232,9 @@ bool Manager::mKRUSKAL()
 
 bool Manager::mBELLMANFORD(int s_vertex, int e_vertex)
 {
+	if(!Bellmanford(graph,s_vertex, e_vertex,&fout)){
+		return 0;
+	}
 	return 1;
 }
 

@@ -62,3 +62,11 @@ bool ListGraph::printGraph(ofstream* fout)
 	*fout << endl;
 	return 1;
 }
+int ListGraph::getadj(int from, int to){
+	map<int, int>::iterator it;
+	it = m_List[from].find(to);
+	if (it != m_List[from].end() && it->second != 0) {
+		return 1; //connect
+	}
+	else{return 0;}	
+}

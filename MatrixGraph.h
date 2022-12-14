@@ -19,6 +19,7 @@ public:
 	void insetEdge_nodi(int from, int to, int weight);
 	void getAdjacentEdges_nodi(int vertex, map<int, int>* m);
 	int getValue(int i, int j);
+	int getadj(int from, int to);
 };
 
 #endif

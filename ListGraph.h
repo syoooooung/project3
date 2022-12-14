@@ -17,6 +17,7 @@ public:
 	void insetEdge_nodi(int from, int to, int weight);
 	bool printGraph(ofstream *fout);
 	int getValue(int i, int j);
+	int getadj(int from, int to);
 };
 
 #endif
