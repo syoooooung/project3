@@ -144,6 +144,7 @@ bool Kruskal(Graph* graph,ofstream *fout)
         weight[i]=weight[i+1]; //shift left 1
     }
     w_index--;
+    int cnt=0;
     for(int i=0; i<w_index; ){
         for(int j=0; j<g_sz; j++){
             for(int k=0; k<g_sz; k++){
@@ -154,6 +155,7 @@ bool Kruskal(Graph* graph,ofstream *fout)
                     if(k_set != j_set){ //if diff set
                         Union(k_set, j_set, parent); //union
                         edge[j][k]= weight[i];
+                        cnt++;
                     }
                     i++; 
                     if(i==w_index)break;
@@ -164,7 +166,7 @@ bool Kruskal(Graph* graph,ofstream *fout)
         }
          if(i==w_index)break;
     }
-
+    if(cnt != g_sz-1){return 0;}  
 //
     for(int i=0; i<g_sz ; i++){
         for(int j=0; j<g_sz; j++){
