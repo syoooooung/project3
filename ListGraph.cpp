@@ -31,7 +31,7 @@ void ListGraph::getAdjacentEdges_nodi(int vertex, map<int, int>* m)
 	}
 }
 
-void ListGraph::insertEdge(int from, int to, int weight)
+void ListGraph::insertEdge(int from, int to, int weight) //insert edge
 {
 	m_List[from].insert(make_pair(to, weight));
 }

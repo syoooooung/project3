@@ -1,6 +1,6 @@
 #include "MatrixGraph.h"
 
-MatrixGraph::MatrixGraph(bool type, int size) : Graph(type, size)
+MatrixGraph::MatrixGraph(bool type, int size) : Graph(type, size) //constructor
 {
 	m_Mat = new int* [size];
 	Mat_nodi = new int*[size];
@@ -13,7 +13,7 @@ MatrixGraph::MatrixGraph(bool type, int size) : Graph(type, size)
 	}
 }
 
-MatrixGraph::~MatrixGraph()
+MatrixGraph::~MatrixGraph() //destructor
 {
 	for (int i = 0; i < getSize(); i++)
 	{
@@ -34,7 +34,7 @@ int MatrixGraph::getadj(int from, int to){
 	else{return false;}
 }
 
-void MatrixGraph::getAdjacentEdges(int vertex, map<int, int>* m)
+void MatrixGraph::getAdjacentEdges(int vertex, map<int, int>* m) //get adjacent vertex
 {
 	for (int i = 0; i < getSize(); i++)
 	{

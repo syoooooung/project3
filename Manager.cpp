@@ -223,17 +223,17 @@ bool Manager::mDFS(int vertex)
 
 bool Manager::mDFS_R(int vertex)
 {
-	if(vertex<0 || vertex > graph->getSize()) return 0;
+	if(vertex<0 || vertex > graph->getSize()) return 0; //errorcode
 	fout << "=========DFS_R=========" << endl;
 	fout << "startvertex: " << vertex << endl;
-	vector<bool> visit(graph->getSize(), false);
+	vector<bool> visit(graph->getSize(), false); //init
 	DFS_R(graph, &visit, vertex, &fout);
 	fout << endl;
 	fout << "=======================" << endl;
 	return 1;
 }
 
-bool Manager::mDIJKSTRA(int vertex)
+bool Manager::mDIJKSTRA(int vertex) //digkstra
 {
 	if(vertex<0 || vertex > graph->getSize()) return 0;
 	if(!Dijkstra(graph, vertex, &fout)){
@@ -246,8 +246,8 @@ bool Manager::mDIJKSTRA(int vertex)
 }
 
 bool Manager::mKRUSKAL()
-{
-	if(graph == nullptr){
+{ //kruskal
+	if(graph == nullptr){ //if graphnot exist
 		return 0;
 	}
 	if(!Kruskal(graph, &fout)){
@@ -256,10 +256,10 @@ bool Manager::mKRUSKAL()
 	return 1;
 }
 
-bool Manager::mBELLMANFORD(int s_vertex, int e_vertex)
+bool Manager::mBELLMANFORD(int s_vertex, int e_vertex) //bellmanford
 {
 	if(!Bellmanford(graph,s_vertex, e_vertex,&fout)){
-		return 0;
+		return 0; //errorcode
 	}
 	return 1;
 }
@@ -267,7 +267,7 @@ bool Manager::mBELLMANFORD(int s_vertex, int e_vertex)
 bool Manager::mFLOYD()
 {
 	if(!FLOYD(graph, &fout)){
-		return 0;
+		return 0; //errorcode
 	}
 	return 1;
 }

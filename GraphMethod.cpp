@@ -107,20 +107,20 @@ bool Kruskal(Graph* graph,ofstream *fout)
     for(int i=0; i<g_sz; i++){
         map<int,int>mm;
         map<int,int>::iterator it;
-        graph->getAdjacentEdges_nodi(i, &mm); //getadjacent&no direction
+        graph->getAdjacentEdges(i, &mm); //getadjacent&no direction
 
         for(it = mm.begin() ; it!= mm.end();it++){
             path[i][it->first]= it->second;
-            int tmp_n1=path[i][it->first];
+            int tmp_n1=path[i][it->first]; //remove one because nodirection
             int tmp_n2=path[it->first][i];
-            if(tmp_n1==tmp_n2){
-                path[i][it->first]=0;
+            if(tmp_n1==tmp_n2){ 
+                path[i][it->first]=0; //if same=>one remove
                 continue;
             }
-            else if((tmp_n1 > tmp_n2 )&& (tmp_n2 != 0)){
+            else if((tmp_n1 > tmp_n2 )&& (tmp_n2 != 0)){ //smaller save
                 path[i][it->first]=0; continue;
             }
-            else if((tmp_n1 < tmp_n2) &&( tmp_n2 != 0)){
+            else if((tmp_n1 < tmp_n2) &&( tmp_n1 != 0)){ //smaller save
                 path[it->first][i]=0; continue;
             }
         } //no isang
@@ -130,61 +130,46 @@ bool Kruskal(Graph* graph,ofstream *fout)
     for(int i=0; i<g_sz; i++){
         for(int j=0; j<g_sz;j++){
             if(path[i][j] != 0){
-                weight[w_index]=path[i][j];
+                weight[w_index]=path[i][j]; //copy weight to arr
                 w_index++;
             }
         }
     }
     ///---------------
-    for(int i=0;i< w_index;i++){
-        cout<<"=="<<weight[i]<<" ";
-    }
-    cout<<endl;
+    
 
+    quicksort(weight,1,w_index-1); //weight sort
 
-    quicksort(weight,1,w_index-1);
     for(int i=0;i< w_index;i++){
-        weight[i]=weight[i+1];
+        weight[i]=weight[i+1]; //shift left 1
     }
-    for(int i=0;i< w_index;i++){
-        cout<<"=="<<weight[i]<<" ";
-    }
-    cout<<endl;
     w_index--;
     for(int i=0; i<w_index; ){
         for(int j=0; j<g_sz; j++){
             for(int k=0; k<g_sz; k++){
-                if(path[j][k]== weight[i]){
-                    path[j][k]=0;
+                if(path[j][k]== weight[i]){ //find edge
+                    path[j][k]=0; //check visit
                     int k_set = CollapsingFind(parent, k);
                     int j_set = CollapsingFind(parent, j);
-                    if(k_set != j_set){
-                        Union(k_set, j_set, parent);
+                    if(k_set != j_set){ //if diff set
+                        Union(k_set, j_set, parent); //union
                         edge[j][k]= weight[i];
                     }
                     i++; 
                     if(i==w_index)break;
                 }
-                if(i==w_index)break;
+                if(i==w_index)break; //break
             }
             if(i==w_index)break;
         }
          if(i==w_index)break;
-    }
-////
-    for(int i=0; i<g_sz ; i++){
-        for(int j=0; j<g_sz; j++){
-            
-         cout<<edge[i][j];
-           
-        }cout<<endl;
     }
 
 //
     for(int i=0; i<g_sz ; i++){
         for(int j=0; j<g_sz; j++){
             if(edge[i][j]!=0){
-                edge[j][i]=edge[i][j];
+                edge[j][i]=edge[i][j]; //copy
             }
         }
     }
@@ -192,11 +177,11 @@ bool Kruskal(Graph* graph,ofstream *fout)
     *fout<<"======= Kruskal ======="<<endl;
     int distance=0;
     for(int i=0; i<g_sz; i++){
-        *fout<<"["<<i<<"] ";
+        *fout<<"["<<i<<"] "; 
         for(int j=0; j<g_sz; j++){
             if(edge[i][j]!=0){
-                *fout<<j<<"("<<edge[i][j]<<") ";
-                distance += edge[i][j];
+                *fout<<j<<"("<<edge[i][j]<<") "; //print
+                distance += edge[i][j]; //count distance
             }
         }
         *fout<<endl;
@@ -207,9 +192,9 @@ bool Kruskal(Graph* graph,ofstream *fout)
 }
 int CollapsingFind(int parent[], int i){
     int r=i;
-    for(r=i ; parent[r]>=0; r=parent[r]){
+    for(r=i ; parent[r]>=0; r=parent[r]){ //get parent
         while(i !=r){
-            int s= parent[i];
+            int s= parent[i]; //collapsing find
             parent[i]=r;
             i=s;
         }
@@ -218,34 +203,34 @@ int CollapsingFind(int parent[], int i){
 }
 int Union(int i, int j, int parent[]){
     int temp = parent[i]+ parent[j];
-    if(parent[i]> parent[j]){
-        parent[i]=j;
+    if(parent[i]> parent[j]){ //if i smaller
+        parent[i]=j; //put i to j
         parent[j]=temp;
     }
     else{
-        parent[j]=i;
+        parent[j]=i; //put j to i
         parent[i]=temp;
     }
 }
-void quicksort(int arr[], int low, int high){
+void quicksort(int arr[], int low, int high){ //sort function
     if(low<high){
         if(high-low+1 <=6){
-            insertionsort(arr,low,high);
+            insertionsort(arr,low,high); //segmetation smaller6
         }
         else{
             int i= low;
             int j= high+1;
             int pivot=arr[low];
             do{
-                do{i++;}while(arr[i]<pivot);
-                do{j--;}while(arr[j]>pivot);
-                if(i<j){int tmp=arr[i]; arr[i]=arr[j]; arr[j]=tmp;}
+                do{i++;}while(arr[i]<pivot); //find bigger num
+                do{j--;}while(arr[j]>pivot); //find smaller num
+                if(i<j){int tmp=arr[i]; arr[i]=arr[j]; arr[j]=tmp;} //swap
             }while(i<j);
             int tmp= arr[low];
-            arr[low]=arr[j];
+            arr[low]=arr[j]; //swap
             arr[j]= tmp;
 
-            quicksort(arr,low,j-1);
+            quicksort(arr,low,j-1); //recursion
             quicksort(arr,j+1,high);
         }
     } 
@@ -254,9 +239,9 @@ void insertionsort(int arr[],int a, int e ){//low, high
     for(int j=2; j<=e;j++){
         int insert_n= arr[j];
         int i=j-1;
-        arr[0]= insert_n;
+        arr[0]= insert_n; //tempsave
         while(insert_n<arr[i]){
-            arr[i+1]=arr[i];
+            arr[i+1]=arr[i]; //cmp and shift
             i--;
         }
         arr[i+1]=insert_n;
@@ -337,9 +322,9 @@ int minDistance(Graph* graph, int* dist, int* visit, int sz) {
     int min = INT_MAX, min_index;
     map<int, int> mm;
     for (int v = 0; v < sz; v++) {
-        if (!visit[v] && min >= dist[v]) {
+        if (!visit[v] && min >= dist[v]) { //if min>dist[v]
             min_index = v;
-            min = dist[v];
+            min = dist[v]; //min=distance v
         }
     }
     return min_index;
