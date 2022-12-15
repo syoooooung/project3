@@ -13,9 +13,9 @@ ListGraph::~ListGraph()
 	delete[]List_nodi;
 }
 int ListGraph::getValue(int i, int j) {
-	return List_nodi[i].find(j)->second;
+	return List_nodi[i].find(j)->second; //return wtt
 }
-void ListGraph::getAdjacentEdges(int vertex, map<int, int>* m)
+void ListGraph::getAdjacentEdges(int vertex, map<int, int>* m) //get adg
 {
 	for (map<int, int>::iterator iter = m_List[vertex].begin(); iter != m_List[vertex].end(); iter++)
 	{
@@ -27,7 +27,7 @@ void ListGraph::getAdjacentEdges_nodi(int vertex, map<int, int>* m)
 {
 	for (map<int, int>::iterator iter = List_nodi[vertex].begin(); iter != List_nodi[vertex].end(); iter++)
 	{
-		m->insert({ iter->first,iter->second });
+		m->insert({ iter->first,iter->second }); //nodirection
 	}
 }
 
@@ -37,13 +37,12 @@ void ListGraph::insertEdge(int from, int to, int weight)
 }
 void ListGraph::insetEdge_nodi(int from, int to, int weight) {
 	List_nodi[from].insert(make_pair(to, weight));
-	List_nodi[to].insert(make_pair(from, weight));
+	List_nodi[to].insert(make_pair(from, weight)); //no direction
 }
 
 bool ListGraph::printGraph(ofstream* fout)
 {
-	cout << "Graph is ListGraph!" << endl;
-	*fout << "Graph is ListGraph!" << endl;
+	*fout << "========PRINT==========" << endl;
 
 	for (int i = 0; i < m_Size; i++)
 	{
@@ -59,13 +58,13 @@ bool ListGraph::printGraph(ofstream* fout)
 		*fout << endl;
 	}
 	cout << endl;
-	*fout << endl;
+	*fout <<"===================="<< endl;
 	return 1;
 }
 int ListGraph::getadj(int from, int to){
 	map<int, int>::iterator it;
 	it = m_List[from].find(to);
-	if (it != m_List[from].end() && it->second != 0) {
+	if (it != m_List[from].end() && it->second != 0) { //if connectreturntrue
 		return 1; //connect
 	}
 	else{return 0;}	

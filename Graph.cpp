@@ -12,5 +12,5 @@ Graph::~Graph()
 }
 
 
-bool Graph::getType() { return m_Type; }
-int Graph::getSize() { return m_Size; }
+bool Graph::getType() { return m_Type; } //return type
+int Graph::getSize() { return m_Size; } //return size
