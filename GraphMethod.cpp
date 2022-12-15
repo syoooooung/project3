@@ -186,6 +186,7 @@ bool Kruskal(Graph* graph,ofstream *fout)
         }
         *fout<<endl;
     }
+    distance =distance/2;
     *fout<<"cost: "<<distance<<endl;
     *fout<<"========================"<<endl;
     return 1;
@@ -446,7 +447,7 @@ bool FLOYD(Graph* graph,ofstream *fout)
     for(int i=0; i< g_sz ; i++){
        if(distance[i][i]<0) return 0; //negative cycle
     }
-    cout<<"1";
+   
     *fout<<"======== PRINT ========="<<endl; //print matrix
     for (int i = 0; i < g_sz; i++)
 	{
